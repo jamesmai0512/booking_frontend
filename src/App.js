@@ -7,7 +7,7 @@ const App = () => {
   return (
     <div>
       <Switch>
-        <Route path="/create">
+        <Route path="/dashboard/meetings/create">
           <NewMeetings />
         </Route>
         <Route path="/">

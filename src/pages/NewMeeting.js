@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import StartDate from "../components/StartDate";
 import EndDate from "../components/EndDate";
+import StartTime from "../components/StartTime";
+import EndTime from "../components/EndTime";
 import axiox from "axios";
 import {
   Col,
@@ -20,6 +22,8 @@ const NewMeetings = () => {
 
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+  const [startTime, setStartTime] = useState(new Date());
+  const [endTime, setEndTime] = useState(new Date());
 
   const [newMeeting, setNewMeeting] = useState({
     user_name: "",
@@ -27,9 +31,13 @@ const NewMeetings = () => {
     time_meeting: "",
     start_date: "",
     end_date: "",
+    start_time: "",
+    end_time: "",
   });
 
-  // const [date, setDate] = useState(new Date());
+  // const onChange = (time) => {
+  //   setTime(time);
+  // };
 
   let history = useHistory();
 
@@ -84,7 +92,7 @@ const NewMeetings = () => {
         <Col>
           <Input
             type="text"
-            placeholder="00:00:00"
+            placeholder="30"
             onChange={(event) => {
               setNewMeeting({
                 ...newMeeting,
@@ -97,23 +105,52 @@ const NewMeetings = () => {
         </Col>
       </FormGroup>
 
-      <StartDate
-        FormGroup={FormGroup}
-        startDate={startDate}
-        setStartDate={setStartDate}
-        setNewMeeting={setNewMeeting}
-        newMeeting={newMeeting}
-        endDate={endDate}
-      />
+      <FormGroup row>
+        <Label sm="2">Days Available</Label>
+        <Label sm="0.5">From</Label>
 
-      <EndDate
-        FormGroup={FormGroup}
-        endDate={endDate}
-        setEndDate={setEndDate}
-        setNewMeeting={setNewMeeting}
-        newMeeting={newMeeting}
-        startDate={startDate}
-      />
+        <Col>
+          <StartDate
+            startDate={startDate}
+            setStartDate={setStartDate}
+            setNewMeeting={setNewMeeting}
+            newMeeting={newMeeting}
+            endDate={endDate}
+          />
+        </Col>
+        <Label sm="0.5">To</Label>
+
+        <Col>
+          <EndDate
+            endDate={endDate}
+            setEndDate={setEndDate}
+            setNewMeeting={setNewMeeting}
+            newMeeting={newMeeting}
+            startDate={startDate}
+          />
+        </Col>
+      </FormGroup>
+
+      <FormGroup row>
+        <Label sm="2">Time Available</Label>
+        <StartTime
+          Col={Col}
+          Label={Label}
+          startTime={startTime}
+          setStartTime={setStartTime}
+          setNewMeeting={setNewMeeting}
+          newMeeting={newMeeting}
+        />
+
+        <EndTime
+          Col={Col}
+          Label={Label}
+          endTime={endTime}
+          setEndTime={setEndTime}
+          setNewMeeting={setNewMeeting}
+          newMeeting={newMeeting}
+        />
+      </FormGroup>
 
       <Button
         type="button"
@@ -125,17 +162,25 @@ const NewMeetings = () => {
             time_meeting,
             start_date,
             end_date,
+            start_time,
+            end_time,
           } = newMeeting;
 
           if (user_name !== "" && title !== "") {
+            const data = {
+              user_name: user_name,
+              title: title,
+              time_meeting: time_meeting,
+              start_date: start_date,
+              end_date: end_date,
+              start_time: start_time,
+              end_time: end_time,
+            };
+
+            console.log(data);
+
             axiox
-              .post("http://localhost:3001/meetings", {
-                user_name: user_name,
-                title: title,
-                time_meeting: time_meeting,
-                start_date: start_date,
-                end_date: end_date,
-              })
+              .post("http://localhost:3001/meetings", data)
               .then((response) => {
                 console.log(response);
                 if (response.status === 201) {
@@ -155,7 +200,7 @@ const NewMeetings = () => {
           }
         }}
       >
-        Submit
+        Create
       </Button>
     </Form>
   );
