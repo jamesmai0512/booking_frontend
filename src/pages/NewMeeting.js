@@ -166,7 +166,7 @@ const NewMeetings = () => {
             end_time,
           } = newMeeting;
 
-          if (user_name !== "" && title !== "") {
+          if (user_name !== "" && title !== "" && time_meeting !== "") {
             const data = {
               user_name: user_name,
               title: title,
