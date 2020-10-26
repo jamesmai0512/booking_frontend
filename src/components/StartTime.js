@@ -26,7 +26,7 @@ const StartTime = (props) => {
         }}
         showTimeSelect
         showTimeSelectOnly
-        timeIntervals={15}
+        timeIntervals={10}
         timeCaption="Time"
         dateFormat="hh:mm aa"
       />

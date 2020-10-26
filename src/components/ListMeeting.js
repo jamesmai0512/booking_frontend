@@ -1,6 +1,5 @@
 import React from "react";
 import { Button, Card, CardBody, CardTitle, Col } from "reactstrap";
-import { useParams } from "react-router-dom";
 
 const ListMeeting = (props) => {
   const { item } = props;

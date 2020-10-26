@@ -35,10 +35,6 @@ const NewMeetings = () => {
     end_time: "",
   });
 
-  // const onChange = (time) => {
-  //   setTime(time);
-  // };
-
   let history = useHistory();
 
   return (
