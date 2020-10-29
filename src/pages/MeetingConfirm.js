@@ -16,6 +16,7 @@ import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
 import setDate from "date-fns/setDate";
 import setMonth from "date-fns/setMonth";
+import addDays from "date-fns/addDays";
 import setYear from "date-fns/setYear";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
@@ -26,7 +27,10 @@ const MeetingConfirm = () => {
   const [nameRequire, setNameRequire] = useState(false);
   const [emailRequire, setEmailRequire] = useState(false);
   const [messageRequire, setMessagRequire] = useState(false);
+  const [timeInput, setTimeInput] = useState({});
 
+  const [dateMeeting, setDateMeeting] = useState(new Date());
+  const [time, setTime] = useState(new Date());
   const [meetingConfirm, setMeetingConfirm] = useState({
     date: "",
     time: "",
@@ -39,34 +43,58 @@ const MeetingConfirm = () => {
     axios
       .get(`http://localhost:3001/meetings/${meetingId}`)
       .then((response) => {
+        console.log(response);
+
         const { data } = response;
+        const startYear = moment(data.start_date).format("YYYY");
+        const endYear = moment(data.end_date).format("YYYY");
+
+        const startMonth = moment(data.start_date).format("MM");
+        const endMonth = moment(data.end_date).format("MM");
+
+        const startDate = moment(data.start_date).format("DD");
+        const endDate = moment(data.end_date).format("DD");
+
+        const startHours = moment(data.start_time).format("HH");
+        const endHours = moment(data.end_time).format("HH");
+        const startMinutes = moment(data.start_time).format("mm");
+        const endMinutes = moment(data.end_time).format("mm");
+
+        const timeRange = {
+          startYear,
+          endYear,
+          startMonth,
+          endMonth,
+          startDate,
+          endDate,
+          startHours,
+          endHours,
+          startMinutes,
+          endMinutes,
+        };
+        setTimeInput(timeRange);
+
+        setDateMeeting(
+          setYear(
+            setMonth(
+              setDate(new Date(), timeRange.startDate),
+              timeRange.startMonth - 1
+            ),
+            timeRange.startYear
+          )
+        );
+
+        setTime(
+          setHours(
+            setMinutes(new Date(), timeRange.startMinutes),
+            timeRange.startHours
+          )
+        );
+
+        console.log(timeRange);
         setMeetingDetail(data);
       });
-    console.log(startDate);
-    console.log(endDate);
   }, []);
-
-  const startYear = moment(meetingDetail.start_date).format("YYYY");
-  const endYear = moment(meetingDetail.end_date).format("YYYY");
-
-  const startMonth = moment(meetingDetail.start_date).format("MM");
-  const endMonth = moment(meetingDetail.end_date).format("MM");
-
-  const startDate = moment(meetingDetail.start_date).format("DD");
-  const endDate = moment(meetingDetail.end_date).format("DD");
-
-  const hoursAM = moment(meetingDetail.start_time).format("HH");
-  const hoursPM = moment(meetingDetail.end_time).format("HH");
-  const minutesAM = moment(meetingDetail.start_time).format("mm");
-  const minutesPM = moment(meetingDetail.end_time).format("mm");
-
-  const [dateMeeting, setDateMeeting] = useState(
-    setYear(setMonth(setDate(new Date(), startDate), startMonth), startYear)
-  );
-
-  const [time, setTime] = useState(
-    setHours(setMinutes(new Date(), minutesAM), hoursAM)
-  );
 
   let history = useHistory();
   const handleConfirmBooking = () => {
@@ -76,11 +104,13 @@ const MeetingConfirm = () => {
 
     if (name !== "" && email !== "" && message !== "") {
       const dataConfirm = {
-        dateMeeting: dateMeeting,
-        time: time,
-        name: name,
-        email: email,
-        message: message,
+        booking: {
+          date: dateMeeting,
+          time: time,
+          name: name,
+          email: email,
+          message: message,
+        },
       };
 
       axios
@@ -107,12 +137,6 @@ const MeetingConfirm = () => {
     <>
       <Form>
         <FormGroup>
-          <h4>{meetingDetail.title}</h4>
-          <p>{meetingDetail.time_meeting} min</p>
-          <p>{meetingDetail.start_date}</p>
-        </FormGroup>
-
-        <FormGroup>
           <DatePicker
             selected={dateMeeting}
             onChange={(dateMeeting) => {
@@ -123,12 +147,18 @@ const MeetingConfirm = () => {
               });
             }}
             minDate={setYear(
-              setMonth(setDate(new Date(), startDate), startMonth),
-              startYear
+              setMonth(
+                setDate(new Date(), timeInput.startDate),
+                timeInput.startMonth - 1
+              ),
+              timeInput.startYear
             )}
             maxDate={setYear(
-              setMonth(setDate(new Date(), endDate), endMonth),
-              endYear
+              setMonth(
+                setDate(new Date(), timeInput.endDate),
+                timeInput.endMonth - 1
+              ),
+              timeInput.endYear
             )}
             dateFormat="MMMM d, yyyy"
           />
@@ -144,12 +174,17 @@ const MeetingConfirm = () => {
             showTimeSelect
             showTimeSelectOnly
             timeIntervals={meetingDetail.time_meeting}
-            minTime={setHours(setMinutes(new Date(), minutesAM), hoursAM)}
-            maxTime={setHours(setMinutes(new Date(), minutesPM), hoursPM)}
+            minTime={setHours(
+              setMinutes(new Date(), timeInput.startMinutes),
+              timeInput.startHours
+            )}
+            maxTime={setHours(
+              setMinutes(new Date(), timeInput.endMinutes),
+              timeInput.endHours
+            )}
             dateFormat="h:mm aa"
           />
         </FormGroup>
-
         <FormGroup>
           <Col>
             <Input
@@ -169,7 +204,6 @@ const MeetingConfirm = () => {
             )}
           </Col>
         </FormGroup>
-
         <FormGroup>
           <Col>
             <Input
@@ -187,7 +221,6 @@ const MeetingConfirm = () => {
             {emailRequire && <FormFeedback>Email is require</FormFeedback>}
           </Col>
         </FormGroup>
-
         <FormGroup>
           <Col>
             <Input
@@ -205,7 +238,6 @@ const MeetingConfirm = () => {
             {messageRequire && <FormFeedback>Message is require</FormFeedback>}
           </Col>
         </FormGroup>
-
         <Button
           type="button"
           color="success"

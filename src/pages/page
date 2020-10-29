@@ -1,204 +1,61 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useHistory } from "react-router-dom";
-import {
-  Col,
-  Jumbotron,
-  Button,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  FormFeedback,
-} from "reactstrap";
-import axios from "axios";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import moment from "moment";
+  const [a, setA] = useState();
+  const [b, setB] = useState();
+  const [c, setC] = useState();
+  const [sum, setSum] = useState();
 
-const MeetingConfirm = () => {
-  const { meetingId } = useParams();
-  const [meetingDetail, setMeetingDetail] = useState([]);
-  const [date, setDate] = useState(null);
-  const [time, setTime] = useState(new Date());
-  const [nameRequire, setNameRequire] = useState(false);
-  const [emailRequire, setEmailRequire] = useState(false);
-  const [messageRequire, setMessagRequire] = useState(false);
+const handleSum = () => {
+    const numA = Number(a);
+    const numB = Number(b);
+    const numC = Number(c);
 
-  const [meetingConfirm, setMeetingConfirm] = useState({
-    date: "",
-    time: "",
-    name: "",
-    email: "",
-    message: "",
-  });
-
-  useEffect(() => {
-    axios
-      .get(`http://localhost:3001/meetings/${meetingId}`)
-      .then((response) => {
-        const { data } = response;
-        setMeetingDetail(data);
-      });
-  }, []);
-
-  const hoursAM = moment(meetingDetail.start_time).format("HH");
-  const hoursPM = moment(meetingDetail.end_time).format("HH");
-
-  const minutesAM = moment(meetingDetail.start_time).format("mm");
-  const minutesPM = moment(meetingDetail.end_time).format("mm");
-
-  const startDate = () => {
-    moment(meetingDetail.start_date).format("YYYY-MM-DD");
+    const sumNum = total(numA, numB, numC);
+    setSum(sumNum);
+    console.log(sumNum);
   };
 
-  const endDate = () => {
-    moment(meetingDetail.end_date).format("YYYY-MM-DD");
+  const total = (num1, num2, num3) => {
+    return num1 + num2 + num3;
   };
 
-  let history = useHistory();
 
-  const handleConfirmBooking = () => {
-    const { date, time, name, email, message } = meetingConfirm;
 
-    console.log(meetingConfirm);
-
-    if (name !== "" && email !== "" && message !== "") {
-      const dataConfirm = {
-        date: date,
-        time: time,
-        name: name,
-        email: email,
-        message: message,
-      };
-
-      axios
-        .post(`http://localhost:3001/bookings`, dataConfirm)
-        .then((response) => {
-          if (response.status === 201) {
-            history.push("/");
-          }
-        });
-    } else {
-      if (name === "") {
-        setNameRequire(true);
-      }
-      if (email === "") {
-        setEmailRequire(true);
-      }
-      if (message === "") {
-        setMessagRequire(true);
-      }
-    }
-  };
-
-  return (
-    <Form>
-      <FormGroup>
-        <h4>{meetingDetail.title}</h4>
-        <p>{meetingDetail.time_meeting} min</p>
-        <p>{startDate}</p>
-        <p>{endDate}</p>
-      </FormGroup>
-
-      <FormGroup>
-        <DatePicker
-          selected={date}
-          onChange={(date) => {
-            setDate(date);
-            setMeetingConfirm({
-              ...meetingConfirm,
-              date: date,
-            });
-          }}
-          minDate={startDate}
-          maxDate={addDays(endDate)}
-          dateFormat="MMMM d, yyyy"
-        />
-        <DatePicker
-          selected={time}
-          onChange={(time) => {
-            setTime(time);
-            setMeetingConfirm({
-              ...meetingConfirm,
-              time: time,
-            });
-          }}
-          showTimeSelect
-          showTimeSelectOnly
-          timeIntervals={meetingDetail.time_meeting}
-          // minTime={setHours(setMinutes(new Date(), minutesAM), hoursAM)}
-          // maxTime={setHours(setMinutes(new Date(), minutesPM), hoursPM)}
-          dateFormat="h:mm aa"
-        />
-      </FormGroup>
-
-      <FormGroup>
-        <Col>
+  <h1>Sum is {sum}</h1>
+      <Form>
+        <FormGroup>
+          <Label>a</Label>
           <Input
             type="text"
-            name="name"
-            placeholder="Your Name"
             onChange={(event) => {
-              setMeetingConfirm({
-                ...meetingConfirm,
-                name: event.target.value,
-              });
+              setA(event.target.value);
             }}
-            invalid={nameRequire}
-          />
-          {nameRequire && (
-            <FormFeedback>You need to type you name</FormFeedback>
-          )}
-        </Col>
-      </FormGroup>
+          ></Input>
+        </FormGroup>
 
-      <FormGroup>
-        <Col>
+        <FormGroup>
+          <Label>b</Label>
           <Input
-            type="email"
-            name="email"
-            placeholder="Your Email"
+            type="text"
             onChange={(event) => {
-              setMeetingConfirm({
-                ...meetingConfirm,
-                email: event.target.value,
-              });
+              setB(event.target.value);
             }}
-            invalid={emailRequire}
-          />
-          {emailRequire && <FormFeedback>Email is require</FormFeedback>}
-        </Col>
-      </FormGroup>
+          ></Input>
+        </FormGroup>
 
-      <FormGroup>
-        <Col>
+        <FormGroup>
+          <Label>c</Label>
           <Input
-            type="textarea"
-            name="message"
-            placeholder="Message"
+            type="text"
             onChange={(event) => {
-              setMeetingConfirm({
-                ...meetingConfirm,
-                message: event.target.value,
-              });
+              setC(event.target.value);
             }}
-            invalid={messageRequire}
-          />
-          {messageRequire && <FormFeedback>Message is require</FormFeedback>}
-        </Col>
-      </FormGroup>
+          ></Input>
+        </FormGroup>
 
-      <Button
-        type="button"
-        color="success"
-        onClick={() => {
-          handleConfirmBooking();
-        }}
-      >
-        Confirm
-      </Button>
-    </Form>
-  );
-};
-
-export default MeetingConfirm;
+        <Button
+          onClick={() => {
+            handleSum();
+          }}
+        >
+          Sum
+        </Button>
+      </Form>
