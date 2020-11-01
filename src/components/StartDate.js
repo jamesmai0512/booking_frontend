@@ -19,6 +19,7 @@ const StartDate = (props) => {
         selectsStart
         startDate={startDate}
         endDate={endDate}
+        minDate={new Date() - 1}
       />
     </div>
   );

@@ -20,7 +20,7 @@ const EndTime = (props) => {
         }}
         showTimeSelect
         showTimeSelectOnly
-        timeIntervals={10}
+        timeIntervals={60}
         timeCaption="Time"
         dateFormat="hh:mm aa"
       />
