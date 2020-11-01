@@ -9,8 +9,11 @@ const Home = () => {
     <ListMeeting key={item.id} item={item} />
   ));
 
+  const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
+
   useEffect(() => {
-    axios.get("http://localhost:3001/meetings").then((response) => {
+    // axios.get("http://localhost:3001/meetings").then((response) => {
+    axios.get(`${BASE_URL}/meetings`).then((response) => {
       const { data } = response;
       setMeetings(data);
     });
