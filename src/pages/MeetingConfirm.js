@@ -1,22 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import {
-  Col,
-  Jumbotron,
-  Button,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  FormFeedback,
-} from "reactstrap";
+import { Col, Button, Form, FormGroup, Input, FormFeedback } from "reactstrap";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
 import setDate from "date-fns/setDate";
 import setMonth from "date-fns/setMonth";
-import addDays from "date-fns/addDays";
 import setYear from "date-fns/setYear";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
