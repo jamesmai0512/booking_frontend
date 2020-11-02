@@ -33,8 +33,8 @@ const MeetingConfirm = () => {
 
   useEffect(() => {
     axios
-      // .get(`http://localhost:3001/meetings/${meetingId}`)
       .get(`${BASE_URL}/meetings/${meetingId}`)
+      // .get(`http://localhost:3001/meetings/${meetingId}`)
       .then((response) => {
         console.log(response);
 
