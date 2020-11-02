@@ -1,0 +1,14 @@
+.home {
+  background-color: #f5f5f5;
+}
+
+p {
+  text-align: center;
+  color: pink;
+}
+.home .jumbotron {
+  background-color: white;
+  margin-top: 70px;
+  margin-left: 200px;
+  margin-right: 200px;
+}
