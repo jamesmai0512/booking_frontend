@@ -34,7 +34,7 @@ const MeetingConfirm = () => {
   useEffect(() => {
     axios
       // .get(`http://localhost:3001/meetings/${meetingId}`)
-      .get(`${BASE_URL}/${meetingId}`)
+      .get(`${BASE_URL}/meetings/${meetingId}`)
       .then((response) => {
         console.log(response);
 
@@ -105,7 +105,7 @@ const MeetingConfirm = () => {
           message: message,
         },
       };
-
+      // .post(`http://localhost:3001/bookings`, dataConfirm)
       axios.post(`${BASE_URL}/bookings`, dataConfirm).then((response) => {
         if (response.status === 201) {
           history.push("/");

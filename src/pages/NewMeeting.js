@@ -3,7 +3,7 @@ import StartDate from "../components/StartDate";
 import EndDate from "../components/EndDate";
 import StartTime from "../components/StartTime";
 import EndTime from "../components/EndTime";
-import axiox from "axios";
+import axios from "axios";
 import {
   Col,
   Button,
@@ -177,7 +177,7 @@ const NewMeetings = () => {
 
             console.log(data);
 
-            axiox
+            axios
               // .post("http://localhost:3001/meetings", data)
               .post(`${BASE_URL}/meetings`, data)
               .then((response) => {
