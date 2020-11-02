@@ -29,9 +29,12 @@ const MeetingConfirm = () => {
     message: "",
   });
 
+  const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
+
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/meetings/${meetingId}`)
+      // .get(`http://localhost:3001/meetings/${meetingId}`)
+      .get(`${BASE_URL}/${meetingId}`)
       .then((response) => {
         console.log(response);
 
@@ -103,13 +106,11 @@ const MeetingConfirm = () => {
         },
       };
 
-      axios
-        .post(`http://localhost:3001/bookings`, dataConfirm)
-        .then((response) => {
-          if (response.status === 201) {
-            history.push("/");
-          }
-        });
+      axios.post(`${BASE_URL}/bookings`, dataConfirm).then((response) => {
+        if (response.status === 201) {
+          history.push("/");
+        }
+      });
     } else {
       if (name === "") {
         setNameRequire(true);
