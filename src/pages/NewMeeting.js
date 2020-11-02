@@ -35,7 +35,7 @@ const NewMeetings = () => {
     end_time: "",
   });
 
-  const BARE_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
+  const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
 
   let history = useHistory();
 
@@ -179,7 +179,7 @@ const NewMeetings = () => {
 
             axiox
               // .post("http://localhost:3001/meetings", data)
-              .post(`${BARE_URL}/meetings`, data)
+              .post(`${BASE_URL}/meetings`, data)
               .then((response) => {
                 console.log(response);
                 if (response.status === 201) {
