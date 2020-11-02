@@ -3,12 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@octokit/plugin-paginate-rest": "^1.0.2",
+    "@octokit/plugin-request-log": "^1.0.2",
     "@progress/kendo-theme-default": "^4.24.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "@wojtekmaj/react-timerange-picker": "^3.0.0",
     "axios": "^0.20.0",
+    "bcrypt": "^5.0.0",
     "bootstrap": "^4.5.3",
     "date-fns": "^2.16.1",
     "moment": "^2.29.1",
@@ -20,7 +23,7 @@
     "react-dropdown-timepicker": "^1.0.4",
     "react-input-time": "^2.0.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3",
+    "react-scripts": "^4.0.0",
     "react-simple-timefield": "^3.2.3",
     "react-time-input": "0.0.19",
     "react-time-picker": "^4.0.1",
@@ -46,5 +49,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "rollup": "^1.32.1",
+    "xxxxx": "^1.0.3"
   }
 }
