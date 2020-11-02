@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "../components/Home.css";
 import axios from "axios";
 import { Jumbotron, Row, Container } from "reactstrap";
 import ListMeeting from "../components/ListMeeting";
@@ -20,12 +21,14 @@ const Home = () => {
   }, []);
 
   return (
-    <Jumbotron fluid>
-      <Container fluid>
-        <h2 style={{ textAlign: "center", color: "black" }}>James Mai</h2>
-        <Row style={{ textAlign: "center" }}>{listMeetings}</Row>
-      </Container>
-    </Jumbotron>
+    <div className="home">
+      <Jumbotron className="jumbotron">
+        <Container>
+          <p>James Mai</p>
+          <Row style={{ textAlign: "center" }}>{listMeetings}</Row>
+        </Container>
+      </Jumbotron>
+    </div>
   );
 };
 
