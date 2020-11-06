@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import { Col, Button, Form, FormGroup, Input, FormFeedback } from "reactstrap";
+import {
+  Row,
+  Col,
+  Container,
+  Button,
+  Form,
+  FormGroup,
+  Input,
+  FormFeedback,
+} from "reactstrap";
 import axios from "axios";
-import DatePicker from "react-datepicker";
 import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
 import setDate from "date-fns/setDate";
@@ -10,6 +18,10 @@ import setMonth from "date-fns/setMonth";
 import setYear from "date-fns/setYear";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
+import DateConfirm from "../components/DateConfirm";
+import TimeConfirm from "../components/TimeConfirm";
+import "../styles/General.css";
+import "../styles/MeetingConfirm.css";
 
 const MeetingConfirm = () => {
   const { meetingId } = useParams();
@@ -126,119 +138,108 @@ const MeetingConfirm = () => {
 
   return (
     <>
-      <Form>
-        <FormGroup>
-          <DatePicker
-            selected={dateMeeting}
-            onChange={(dateMeeting) => {
-              setDateMeeting(dateMeeting);
-              setMeetingConfirm({
-                ...meetingConfirm,
-                dateMeeting: dateMeeting,
-              });
-            }}
-            minDate={setYear(
-              setMonth(
-                setDate(new Date(), timeInput.startDate),
-                timeInput.startMonth - 1
-              ),
-              timeInput.startYear
-            )}
-            maxDate={setYear(
-              setMonth(
-                setDate(new Date(), timeInput.endDate),
-                timeInput.endMonth - 1
-              ),
-              timeInput.endYear
-            )}
-            dateFormat="MMMM d, yyyy"
-          />
-          <DatePicker
-            selected={time}
-            onChange={(time) => {
-              setTime(time);
-              setMeetingConfirm({
-                ...meetingConfirm,
-                time: time,
-              });
-            }}
-            showTimeSelect
-            showTimeSelectOnly
-            timeIntervals={meetingDetail.time_meeting}
-            minTime={setHours(
-              setMinutes(new Date(), timeInput.startMinutes),
-              timeInput.startHours
-            )}
-            maxTime={setHours(
-              setMinutes(new Date(), timeInput.endMinutes),
-              timeInput.endHours
-            )}
-            dateFormat="h:mm aa"
-          />
-        </FormGroup>
-        <FormGroup>
-          <Col>
-            <Input
-              type="text"
-              name="name"
-              placeholder="Your Name"
-              onChange={(event) => {
-                setMeetingConfirm({
-                  ...meetingConfirm,
-                  name: event.target.value,
-                });
-              }}
-              invalid={nameRequire}
-            />
-            {nameRequire && (
-              <FormFeedback>You need to type you name</FormFeedback>
-            )}
+      <Container className="booking-container">
+        <Row className="meeting-confirm">
+          <Col className="booking-detail" md="6"></Col>
+          <Col className="booking-time" md="6">
+            <Form>
+              <FormGroup>
+                <h5>Select Date</h5>
+                <DateConfirm
+                  dateMeeting={dateMeeting}
+                  setDateMeeting={setDateMeeting}
+                  setMeetingConfirm={setMeetingConfirm}
+                  meetingConfirm={meetingConfirm}
+                  setYear={setYear}
+                  setMonth={setMonth}
+                  setDate={setDate}
+                  timeInput={timeInput}
+                />
+                <br />
+                <br />
+
+                <h5>Select Time</h5>
+                <TimeConfirm
+                  time={time}
+                  setTime={setTime}
+                  setMeetingConfirm={setMeetingConfirm}
+                  meetingConfirm={meetingConfirm}
+                  meetingDetail={meetingDetail}
+                  setHours={setHours}
+                  setMinutes={setMinutes}
+                  timeInput
+                />
+              </FormGroup>
+              <FormGroup>
+                <Col>
+                  <Input
+                    type="text"
+                    name="name"
+                    placeholder="Your Name"
+                    onChange={(event) => {
+                      setMeetingConfirm({
+                        ...meetingConfirm,
+                        name: event.target.value,
+                      });
+                    }}
+                    invalid={nameRequire}
+                  />
+                  {nameRequire && (
+                    <FormFeedback>You need to type you name</FormFeedback>
+                  )}
+                </Col>
+              </FormGroup>
+              <FormGroup>
+                <Col>
+                  <Input
+                    type="email"
+                    name="email"
+                    placeholder="Your Email"
+                    onChange={(event) => {
+                      setMeetingConfirm({
+                        ...meetingConfirm,
+                        email: event.target.value,
+                      });
+                    }}
+                    invalid={emailRequire}
+                  />
+                  {emailRequire && (
+                    <FormFeedback>Email is require</FormFeedback>
+                  )}
+                </Col>
+              </FormGroup>
+              <FormGroup>
+                <Col>
+                  <Input
+                    type="textarea"
+                    name="message"
+                    placeholder="Message"
+                    onChange={(event) => {
+                      setMeetingConfirm({
+                        ...meetingConfirm,
+                        message: event.target.value,
+                      });
+                    }}
+                    invalid={messageRequire}
+                  />
+                  {messageRequire && (
+                    <FormFeedback>Message is require</FormFeedback>
+                  )}
+                </Col>
+              </FormGroup>
+              <Button
+                type="button"
+                color="success"
+                onClick={() => {
+                  handleConfirmBooking();
+                }}
+              >
+                Confirm
+              </Button>
+            </Form>
           </Col>
-        </FormGroup>
-        <FormGroup>
-          <Col>
-            <Input
-              type="email"
-              name="email"
-              placeholder="Your Email"
-              onChange={(event) => {
-                setMeetingConfirm({
-                  ...meetingConfirm,
-                  email: event.target.value,
-                });
-              }}
-              invalid={emailRequire}
-            />
-            {emailRequire && <FormFeedback>Email is require</FormFeedback>}
-          </Col>
-        </FormGroup>
-        <FormGroup>
-          <Col>
-            <Input
-              type="textarea"
-              name="message"
-              placeholder="Message"
-              onChange={(event) => {
-                setMeetingConfirm({
-                  ...meetingConfirm,
-                  message: event.target.value,
-                });
-              }}
-              invalid={messageRequire}
-            />
-            {messageRequire && <FormFeedback>Message is require</FormFeedback>}
-          </Col>
-        </FormGroup>
-        <Button
-          type="button"
-          color="success"
-          onClick={() => {
-            handleConfirmBooking();
-          }}
-        >
-          Confirm
-        </Button>
-      </Form>
+        </Row>
+      </Container>
     </>
   );
 };

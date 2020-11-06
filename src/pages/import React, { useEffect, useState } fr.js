@@ -25,26 +25,27 @@ const Home = () => {
   return (
     <>
       <Container className="home-container">
-        <div className="content">
-          <div className="table">
-            <div className="info">
-              <div className="name">
-                <h5>James Mai</h5>
-              </div>
-              <br />
-              <div className="text">
-                <p>
-                  Welcome to my scheduling page. Please follow the instructions
-                  to add an event to my calendar.
-                </p>
-              </div>
-            </div>
+        {/* <div className="content"> */}
+        {/* <div className="table"> */}
 
-            <Row>
-              <Col style={{ textAlign: "center" }}>{listMeetings}</Col>
-            </Row>
+        {/* <div className="info">
+          <div className="name">
+            <h4>James Mai</h4>
           </div>
-        </div>
+          <br />
+          <div className="text">
+            <p>
+              Welcome to my scheduling page. Please follow the instructions to
+              add an event to my calendar.
+            </p>
+          </div>
+        </div> */}
+
+        <Row>
+          <Col style={{ textAlign: "center" }}>{listMeetings}</Col>
+        </Row>
+        {/* </div> */}
+        {/* </div> */}
       </Container>
     </>
   );
