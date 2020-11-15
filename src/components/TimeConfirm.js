@@ -1,5 +1,6 @@
 import React from "react";
 import DatePicker from "react-datepicker";
+import "../styles/MeetingConfirm.css";
 
 const TimeConfirm = (props) => {
   const {
@@ -15,6 +16,7 @@ const TimeConfirm = (props) => {
 
   return (
     <DatePicker
+      className="time-confirm"
       selected={time}
       onChange={(time) => {
         setTime(time);

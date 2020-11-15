@@ -21,6 +21,7 @@
     "react-day-picker": "^7.4.8",
     "react-dom": "^16.13.1",
     "react-dropdown-timepicker": "^1.0.4",
+    "react-icons": "^3.11.0",
     "react-input-time": "^2.0.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.0",

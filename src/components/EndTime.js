@@ -1,15 +1,15 @@
 import React from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import "../styles/NewMeeting.css";
 
 const EndTime = (props) => {
   const { Col, Label, endTime, setEndTime, setNewMeeting, newMeeting } = props;
 
   return (
     <Col>
-      <Label sm="2">To</Label>
-
       <DatePicker
+        className="end-time"
         selected={endTime}
         onChange={(endTime) => {
           setEndTime(endTime);
