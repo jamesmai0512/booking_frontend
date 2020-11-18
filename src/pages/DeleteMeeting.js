@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Row, Col, Container } from "reactstrap";
-import Meeting from "../components/Meeting";
+import MeetingPost from "../components/MeetingPost.js";
 import "../styles/Home.css";
 import "../styles/General.css";
 
-const Home = () => {
+const DeleteMeeting = () => {
+	const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
 	const [meetings, setMeetings] = useState([]);
 
-	const listMeetings = meetings.map((item) => (
-		<Meeting key={item.id} item={item} />
-	));
-
-	const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
+	const deleteMeeting = meetings.map((item) => <MeetingPost key={item.id} />);
 
 	useEffect(() => {
 		// axios.get("http://localhost:3001/meetings").then((response) => {
@@ -28,20 +25,14 @@ const Home = () => {
 				<div className="content">
 					<div className="table">
 						<div className="info">
-							<div className="name">
-								<h5>James Mai</h5>
+							<div className="title">
+								<h5>Delete Post</h5>
 							</div>
 							<br />
-							<div className="text">
-								<p>
-									Welcome to my scheduling page. Please follow the instructions
-									to add an event to my calendar.
-								</p>
-							</div>
 						</div>
 
 						<Row>
-							<Col style={{ textAlign: "center" }}>{listMeetings}</Col>
+							<Col style={{ textAlign: "center" }}>{deleteMeeting}</Col>
 						</Row>
 					</div>
 				</div>
@@ -50,4 +41,4 @@ const Home = () => {
 	);
 };
 
-export default Home;
+export default DeleteMeeting;

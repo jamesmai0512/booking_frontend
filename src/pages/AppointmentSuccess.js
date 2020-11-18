@@ -3,7 +3,7 @@ import axios from "axios";
 import { useParams, useHistory } from "react-router-dom";
 import { Row, Col, Container, Button } from "reactstrap";
 import "../styles/General.css";
-import "../styles/MeetingConfirm.css";
+import "../styles/AppointmentSuccess.css";
 import { MdWatchLater } from "react-icons/md";
 import { AiTwotoneCalendar } from "react-icons/ai";
 import { AiOutlineCheckCircle } from "react-icons/ai";
@@ -40,9 +40,9 @@ const AppointmentSuccess = () => {
 	let history = useHistory();
 	return (
 		<>
-			<Container className="booking-container">
-				<div className="meeting-confirm">
-					<div className="confirm-text">
+			<Container className="appointment-container">
+				<div className="appointment-success">
+					<div className="appoitment-text">
 						<h1>
 							<AiOutlineCheckCircle />
 							Your appointment has been confirmed.
@@ -50,11 +50,11 @@ const AppointmentSuccess = () => {
 					</div>
 					<div className="show-detail-appointment">
 						<h5 className="user-name-appointment">James Mai</h5>
-						<h2 className="title"> {meetingInfo.title}</h2>
-						<h6 className="time-meeting">
+						<h2 className="appointment-title"> {meetingInfo.title}</h2>
+						<h6 className="minutes-meeting">
 							<MdWatchLater /> {meetingInfo.time_meeting} min
 						</h6>
-						<h6 className="time-meeting-confirm">
+						<h6 className="time-meeting-appointment">
 							<AiTwotoneCalendar /> {startTime}, {dateTime}
 						</h6>
 						<h6 className="user-info-name">

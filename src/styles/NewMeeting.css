@@ -18,6 +18,7 @@ label {
 	margin-left: 210px;
 	margin-right: 210px;
 	color: var(--text-color, rgb(77, 80, 85));
+	background-color: white;
 }
 
 .row {

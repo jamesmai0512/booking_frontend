@@ -19,7 +19,7 @@ import "../styles/NewMeeting.css";
 import "../styles/General.css";
 
 const NewMeetings = () => {
-	const [nameRequire, setNameRequire] = useState(false);
+	// const [nameRequire, setNameRequire] = useState(false);
 	const [titleRequire, setTitleRequire] = useState(false);
 	const [timeRequire, setTimeRequire] = useState(false);
 
@@ -27,6 +27,7 @@ const NewMeetings = () => {
 	const [endDate, setEndDate] = useState(new Date());
 	const [startTime, setStartTime] = useState(new Date());
 	const [endTime, setEndTime] = useState(new Date());
+	const token = localStorage.getItem("account");
 
 	const [newMeeting, setNewMeeting] = useState({
 		// user_name: "",
@@ -64,7 +65,9 @@ const NewMeetings = () => {
 
 			axios
 				// .post("http://localhost:3001/meetings", data)
-				.post(`${BASE_URL}/meetings`, data)
+				.post(`${BASE_URL}/meetings`, data, {
+					headers: { Authorization: `Bearer ${token}` },
+				})
 				.then((response) => {
 					// console.log(response);
 					if (response.status === 201) {
@@ -89,27 +92,6 @@ const NewMeetings = () => {
 				<Form>
 					<Container>
 						<div className="new-meeting">
-							{/* <div row>
-            <Label className="user-name" for="userName" sm={2}>
-              User Name
-            </Label>
-            <Col>
-              <Input
-                type="string"
-                name="name"
-                id="userName"
-                placeholder="Type your Name"
-                onChange={(event) => {
-                  setNewMeeting({
-                    ...newMeeting,
-                    user_name: event.target.value,
-                  });
-                }}
-                invalid={nameRequire}
-              />
-              {nameRequire && <FormFeedback>Name is require</FormFeedback>}
-            </Col>
-          </div> */}
 							<div className="name-user">
 								<h1>James Mai</h1>
 							</div>

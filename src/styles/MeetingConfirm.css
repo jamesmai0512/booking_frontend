@@ -37,28 +37,9 @@
 	margin-top: 25px;
 	margin-left: 30px;
 }
-.show-detail-appointment {
-	margin-left: 30px;
-}
 
 .user-name {
 	padding-top: 25px;
-}
-.user-name-appointment {
-	padding-top: 20px;
-	margin-bottom: 0px;
-	font-family: "Roboto Condensed", sans-serif;
-	color: var(--text-color-level2, rgba(77, 80, 85, 0.6));
-}
-
-.user-info-name {
-	padding-top: 10px;
-	color: var(--text-color-level2, rgba(77, 80, 85, 0.6));
-}
-
-.user-message {
-	padding-top: 10px;
-	color: var(--text-color-level2, rgba(77, 80, 85, 0.6));
 }
 
 .lable {
@@ -86,10 +67,6 @@
 .time-meeting {
 	padding-top: 10px;
 	color: var(--text-color-level2, rgba(77, 80, 85, 0.6));
-}
-
-.time-meeting-confirm {
-	color: var(--text-color, #06c29c);
 }
 
 .title {
@@ -130,15 +107,4 @@
 	text-align: center;
 	padding-top: 40px;
 	font-weight: 100;
-}
-
-.button-back-home.btn.btn-secondary {
-	background-color: var(--primary-color, rgb(0, 162, 255));
-	border-color: var(--primary-color, rgb(0, 162, 255));
-	margin-top: 49px;
-	padding-left: 40px;
-	padding-right: 40px;
-}
-.home-button {
-	text-align: center;
 }
