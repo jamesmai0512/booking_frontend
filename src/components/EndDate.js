@@ -1,6 +1,7 @@
 import React from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import "../styles/NewMeeting.css";
 
 const EndDate = (props) => {
   const { endDate, setEndDate, setNewMeeting, newMeeting, startDate } = props;
@@ -8,6 +9,7 @@ const EndDate = (props) => {
   return (
     <div>
       <DatePicker
+        className="end-date"
         selected={endDate}
         onChange={(date) => {
           setEndDate(date);

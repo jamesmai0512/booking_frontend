@@ -3,206 +3,220 @@ import StartDate from "../components/StartDate";
 import EndDate from "../components/EndDate";
 import StartTime from "../components/StartTime";
 import EndTime from "../components/EndTime";
-import axiox from "axios";
+import axios from "axios";
 import {
-  Col,
-  Button,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  FormFeedback,
+	Col,
+	Button,
+	Form,
+	FormGroup,
+	Label,
+	Input,
+	FormFeedback,
+	Container,
 } from "reactstrap";
 import { useHistory } from "react-router-dom";
+import "../styles/NewMeeting.css";
+import "../styles/General.css";
 
 const NewMeetings = () => {
-  const [nameRequire, setNameRequire] = useState(false);
-  const [titleRequire, setTitleRequire] = useState(false);
-  const [timeRequire, setTimeRequire] = useState(false);
+	// const [nameRequire, setNameRequire] = useState(false);
+	const [titleRequire, setTitleRequire] = useState(false);
+	const [timeRequire, setTimeRequire] = useState(false);
 
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
-  const [startTime, setStartTime] = useState(new Date());
-  const [endTime, setEndTime] = useState(new Date());
+	const [startDate, setStartDate] = useState(new Date());
+	const [endDate, setEndDate] = useState(new Date());
+	const [startTime, setStartTime] = useState(new Date());
+	const [endTime, setEndTime] = useState(new Date());
+	const token = localStorage.getItem("account");
 
-  const [newMeeting, setNewMeeting] = useState({
-    user_name: "",
-    title: "",
-    time_meeting: "",
-    start_date: "",
-    end_date: "",
-    start_time: "",
-    end_time: "",
-  });
+	const [newMeeting, setNewMeeting] = useState({
+		// user_name: "",
+		title: "",
+		time_meeting: "",
+		start_date: "",
+		end_date: "",
+		start_time: "",
+		end_time: "",
+	});
 
-  const BARE_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
+	const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
 
-  let history = useHistory();
+	const createMeeting = () => {
+		const {
+			title,
+			time_meeting,
+			start_date,
+			end_date,
+			start_time,
+			end_time,
+		} = newMeeting;
 
-  return (
-    <Form>
-      <FormGroup row>
-        <Label for="userName" sm={2}>
-          User Name
-        </Label>
-        <Col>
-          <Input
-            type="string"
-            name="name"
-            id="userName"
-            placeholder="Type your Name"
-            onChange={(event) => {
-              setNewMeeting({
-                ...newMeeting,
-                user_name: event.target.value,
-              });
-            }}
-            invalid={nameRequire}
-          />
-          {nameRequire && <FormFeedback>Name is require</FormFeedback>}
-        </Col>
-      </FormGroup>
+		if (title !== "" && time_meeting !== "") {
+			const data = {
+				title: title,
+				time_meeting: time_meeting,
+				start_date: start_date,
+				end_date: end_date,
+				start_time: start_time,
+				end_time: end_time,
+			};
 
-      <FormGroup row>
-        <Label for="titleMeeting" sm={2}>
-          Title
-        </Label>
-        <Col>
-          <Input
-            type="string"
-            name="title"
-            id="titleMeeting"
-            placeholder="Type your title"
-            onChange={(event) => {
-              setNewMeeting({
-                ...newMeeting,
-                title: event.target.value,
-              });
-            }}
-            invalid={titleRequire}
-          />
-          {titleRequire && <FormFeedback>Title is require</FormFeedback>}
-        </Col>
-      </FormGroup>
+			// console.log(data);
 
-      <FormGroup row>
-        <Label sm="2">Meeting Times</Label>
-        <Col>
-          <Input
-            type="text"
-            placeholder="30"
-            onChange={(event) => {
-              setNewMeeting({
-                ...newMeeting,
-                time_meeting: event.target.value,
-              });
-            }}
-            invalid={timeRequire}
-          ></Input>
-          {timeRequire && <FormFeedback>Time is require</FormFeedback>}
-        </Col>
-      </FormGroup>
+			axios
+				// .post("http://localhost:3001/meetings", data)
+				.post(`${BASE_URL}/meetings`, data, {
+					headers: { Authorization: `Bearer ${token}` },
+				})
+				.then((response) => {
+					// console.log(response);
+					if (response.status === 201) {
+						history.push("/");
+					}
+				});
+		} else {
+			if (title === "") {
+				setTitleRequire(true);
+			}
+			if (time_meeting === "") {
+				setTimeRequire(true);
+			}
+		}
+	};
 
-      <FormGroup row>
-        <Label sm="2">Days Available</Label>
-        <Label sm="0.5">From</Label>
+	let history = useHistory();
 
-        <Col>
-          <StartDate
-            startDate={startDate}
-            setStartDate={setStartDate}
-            setNewMeeting={setNewMeeting}
-            newMeeting={newMeeting}
-            endDate={endDate}
-          />
-        </Col>
-        <Label sm="0.5">To</Label>
+	return (
+		<Container className="new-meeting-container">
+			<div className="fill-info">
+				<Form>
+					<Container>
+						<div className="new-meeting">
+							<div className="name-user">
+								<h1>James Mai</h1>
+							</div>
 
-        <Col>
-          <EndDate
-            endDate={endDate}
-            setEndDate={setEndDate}
-            setNewMeeting={setNewMeeting}
-            newMeeting={newMeeting}
-            startDate={startDate}
-          />
-        </Col>
-      </FormGroup>
+							<div>
+								<Col md="6">
+									<Label for="titleMeeting">Title</Label>
 
-      <FormGroup row>
-        <Label sm="2">Time Available</Label>
-        <StartTime
-          Col={Col}
-          Label={Label}
-          startTime={startTime}
-          setStartTime={setStartTime}
-          setNewMeeting={setNewMeeting}
-          newMeeting={newMeeting}
-        />
+									<Input
+										type="string"
+										name="title"
+										id="titleMeeting"
+										placeholder="Type your title"
+										onChange={(event) => {
+											setNewMeeting({
+												...newMeeting,
+												title: event.target.value,
+											});
+										}}
+										invalid={titleRequire}
+									/>
+									{titleRequire && (
+										<FormFeedback>Title is require</FormFeedback>
+									)}
+								</Col>
+							</div>
 
-        <EndTime
-          Col={Col}
-          Label={Label}
-          endTime={endTime}
-          setEndTime={setEndTime}
-          setNewMeeting={setNewMeeting}
-          newMeeting={newMeeting}
-        />
-      </FormGroup>
+							<div>
+								<Col style={{ paddingTop: "15px" }} md="6">
+									<Label>Meeting Times</Label>
 
-      <Button
-        type="button"
-        color="success"
-        onClick={() => {
-          const {
-            user_name,
-            title,
-            time_meeting,
-            start_date,
-            end_date,
-            start_time,
-            end_time,
-          } = newMeeting;
+									<Input
+										type="text"
+										placeholder="30"
+										onChange={(event) => {
+											setNewMeeting({
+												...newMeeting,
+												time_meeting: event.target.value,
+											});
+										}}
+										invalid={timeRequire}
+									></Input>
+									{timeRequire && <FormFeedback>Time is require</FormFeedback>}
+								</Col>
+							</div>
 
-          if (user_name !== "" && title !== "" && time_meeting !== "") {
-            const data = {
-              user_name: user_name,
-              title: title,
-              time_meeting: time_meeting,
-              start_date: start_date,
-              end_date: end_date,
-              start_time: start_time,
-              end_time: end_time,
-            };
+							<Col style={{ paddingTop: "15px" }} md="6">
+								<Label style={{ paddingBottom: "15px" }}>
+									When people can book this event?
+								</Label>
+								<br />
+								<Col>
+									<Label
+										style={{ paddingRight: "20px", paddingBottom: "10px" }}
+									>
+										From
+									</Label>
 
-            console.log(data);
+									<StartDate
+										startDate={startDate}
+										setStartDate={setStartDate}
+										setNewMeeting={setNewMeeting}
+										newMeeting={newMeeting}
+										endDate={endDate}
+									/>
+								</Col>
 
-            axiox
-              // .post("http://localhost:3001/meetings", data)
-              .post(`${BARE_URL}/meetings`, data)
-              .then((response) => {
-                console.log(response);
-                if (response.status === 201) {
-                  history.push("/");
-                }
-              });
-          } else {
-            if (user_name === "") {
-              setNameRequire(true);
-            }
-            if (title === "") {
-              setTitleRequire(true);
-            }
-            if (time_meeting === "") {
-              setTimeRequire(true);
-            }
-          }
-        }}
-      >
-        Create
-      </Button>
-    </Form>
-  );
+								<Col>
+									<Label style={{ paddingRight: "39px" }}>To</Label>
+
+									<EndDate
+										endDate={endDate}
+										setEndDate={setEndDate}
+										setNewMeeting={setNewMeeting}
+										newMeeting={newMeeting}
+										startDate={startDate}
+									/>
+								</Col>
+							</Col>
+
+							<Col style={{ paddingTop: "15px" }} md="6">
+								<Label style={{ paddingBottom: "15px" }}>Time Available</Label>
+								<br />
+								<Col style={{ paddingBottom: "10px" }}>
+									<Label style={{ paddingRight: "5px" }}>From</Label>
+
+									<StartTime
+										Col={Col}
+										Label={Label}
+										startTime={startTime}
+										setStartTime={setStartTime}
+										setNewMeeting={setNewMeeting}
+										newMeeting={newMeeting}
+									/>
+								</Col>
+								<Col>
+									<Label style={{ paddingRight: "24px" }}>To</Label>
+
+									<EndTime
+										Col={Col}
+										Label={Label}
+										endTime={endTime}
+										setEndTime={setEndTime}
+										setNewMeeting={setNewMeeting}
+										newMeeting={newMeeting}
+									/>
+								</Col>
+							</Col>
+
+							<Button
+								className="button-create"
+								type="button"
+								// color="primary"
+								onClick={() => {
+									createMeeting();
+								}}
+							>
+								Create
+							</Button>
+						</div>
+					</Container>
+				</Form>
+			</div>
+		</Container>
+	);
 };
 
 export default NewMeetings;

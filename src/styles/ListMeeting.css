@@ -1,0 +1,54 @@
+.button {
+	flex: 0 calc(50% - 40px);
+	min-height: 180px;
+	width: 60px;
+	margin: 20px;
+	padding: 20px;
+	border: 1px solid transparent;
+	border-top: 1px solid var(--text-color-level3, rgba(77, 80, 85, 0.1));
+}
+
+/* .button {
+  color: var(--text-color, rgb(77, 80, 85));
+  text-decoration: none;
+  
+} */
+
+.card-body {
+	display: flex;
+	align-items: center;
+	height: 40px;
+	margin-bottom: 20px;
+}
+
+.circle {
+	background-color: rgb(31, 142, 14);
+	flex: 0 0 auto;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	border: solid 2px #fff;
+}
+
+.triangle {
+	position: relative;
+	right: -37px;
+	border: 8px solid transparent;
+	border-left-color: var(--text-color, rgb(77, 80, 85));
+}
+
+.card-title {
+	flex: 1 1 auto;
+	max-width: 250px;
+	font-weight: bold;
+	font-size: 18px;
+	padding-top: 12px;
+	/* line-height: 1.2; */
+	color: var(--text-color, rgb(77, 80, 85));
+}
+
+.button-delete.btn.btn-danger {
+	margin-top: 130px;
+	/* padding-top: 20px;
+	padding-bottom: 10px; */
+}

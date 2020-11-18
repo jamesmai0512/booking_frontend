@@ -1,0 +1,71 @@
+.appointment-container {
+	margin-top: 66px;
+	margin-bottom: 30px;
+}
+
+.appointment-success {
+	background-color: white;
+	min-height: 500px;
+	justify-content: center;
+	margin-left: 150px;
+	margin-right: 150px;
+	border: 1px solid var(--text-color-level3, rgba(77, 80, 85, 0.1));
+	border-radius: 8px;
+	box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.08);
+}
+
+.appoitment-text {
+	height: 100px;
+	color: var(--primary-color, rgb(31, 189, 89));
+	text-align: center;
+	padding-top: 40px;
+	font-weight: 100;
+}
+
+.show-detail-appointment {
+	margin-left: 30px;
+}
+
+.user-name-appointment {
+	padding-top: 20px;
+	margin-bottom: 0px;
+	font-family: "Roboto Condensed", sans-serif;
+	color: var(--text-color-level2, rgba(77, 80, 85, 0.6));
+}
+
+.appointment-title {
+	color: var(--text-color, rgb(77, 80, 85));
+}
+
+.minutes-meeting {
+	padding-top: 10px;
+	color: var(--text-color-level2, rgba(77, 80, 85, 0.6));
+}
+
+.time-meeting-appointment {
+	color: var(--text-color, #06c29c);
+}
+
+.user-info-name {
+	padding-top: 10px;
+	color: var(--text-color-level2, rgba(77, 80, 85, 0.6));
+}
+
+.user-message {
+	padding-top: 10px;
+	color: var(--text-color-level2, rgba(77, 80, 85, 0.6));
+}
+
+.home-button {
+	text-align: center;
+}
+
+.button-back-home.btn-secondary {
+	background-color: var(--primary-color, rgb(0, 162, 255));
+	border-color: var(--primary-color, rgb(0, 162, 255));
+	margin-top: 100px;
+	padding-left: 40px;
+	padding-right: 40px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
