@@ -1,0 +1,38 @@
+.card-body {
+	display: flex;
+	align-items: center;
+	height: 40px;
+	margin-bottom: 20px;
+}
+
+.delete-circle {
+	background-color: rgb(175, 15, 15);
+	flex: 0 0 auto;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	border: solid 2px #fff;
+}
+
+.triangle {
+	position: relative;
+	right: -37px;
+	border: 8px solid transparent;
+	border-left-color: var(--text-color, rgb(77, 80, 85));
+}
+
+.card-title {
+	flex: 1 1 auto;
+	max-width: 250px;
+	font-weight: bold;
+	font-size: 18px;
+	padding-top: 12px;
+	/* line-height: 1.2; */
+	color: var(--text-color, rgb(77, 80, 85));
+}
+
+.delete-button.btn.btn-secondary {
+	background-color: #d11a2a;
+	border-color: #d11a2a;
+	border-radius: 6px;
+}

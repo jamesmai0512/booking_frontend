@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@200&family=Roboto&display=swap");
-.home-container {
+.home-container.container {
 	justify-content: center;
 	margin-top: 66px;
 	margin-bottom: 30px;
@@ -57,4 +57,10 @@
 	flex-wrap: wrap;
 	max-width: 900px;
 	margin: 0 auto;
+}
+
+.logout.btn.btn-secondary {
+	background-color: #d11a2a;
+	border-color: #d11a2a;
+	margin: 20px;
 }

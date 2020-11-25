@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import "../styles/Login.css";
 import axios from "axios";
 import {
@@ -18,6 +19,7 @@ const Login = () => {
 		password: "",
 	});
 
+	let history = useHistory();
 	const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
 
 	const handleLoginButton = () => {
@@ -29,10 +31,12 @@ const Login = () => {
 				.post(`${BASE_URL}/sessions`, { username, password })
 				.then((response) => {
 					const { data } = response;
-					// if(response.status == 201) {
-					//   axios.post(`${BASE_URL}/meetings`, {headers: {"Authorization" : `Bearer ${response.auth_token}`}})
-					// }
-					localStorage.setItem("account", `${data.auth_token}`);
+					if (response.status == 201) {
+						// axios.post(`${BASE_URL}/meetings`, {headers: {"Authorization" : `Bearer ${response.auth_token}`}})
+
+						localStorage.setItem("account", `${data.auth_token}`);
+						history.push("/meeting/create");
+					}
 				});
 		}
 	};

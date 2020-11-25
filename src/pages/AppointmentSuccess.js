@@ -13,12 +13,13 @@ import moment from "moment";
 
 const AppointmentSuccess = () => {
 	const { meetingId } = useParams();
+	const { bookingId } = useParams();
 	const [bookingInfo, setBookingInfo] = useState([]);
 	const [meetingInfo, setMeetingInfo] = useState([]);
 	const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
 
 	useEffect(() => {
-		axios.get(`${BASE_URL}/bookings/${meetingId}`).then((response) => {
+		axios.get(`${BASE_URL}/bookings/${bookingId}`).then((response) => {
 			const { data } = response;
 			setBookingInfo(data);
 		});

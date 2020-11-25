@@ -11,6 +11,7 @@ import {
 	FormFeedback,
 } from "reactstrap";
 import axios from "axios";
+import DatePicker from "react-datepicker";
 import setHours from "date-fns/setHours";
 import setMinutes from "date-fns/setMinutes";
 import setDate from "date-fns/setDate";
@@ -19,7 +20,6 @@ import setYear from "date-fns/setYear";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 import DateConfirm from "../components/DateConfirm";
-import TimeConfirm from "../components/TimeConfirm";
 import "../styles/General.css";
 import "../styles/MeetingConfirm.css";
 import { MdWatchLater } from "react-icons/md";
@@ -47,17 +47,11 @@ const MeetingConfirm = () => {
 
 	const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:3001";
 
-	// useEffect(() => {
-	// 	axios.get("kiijiiijiiijiiijjji");
-	// }, []);
-
 	useEffect(() => {
 		axios
-			// .get(`${BASE_URL}/meetings/${meetingId}`)
-			.get(`http://localhost:3001/meetings/${meetingId}`)
+			.get(`${BASE_URL}/meetings/${meetingId}`)
+			// .get(`http://localhost:3001/meetings/${meetingId}`)
 			.then((response) => {
-				console.log(response);
-
 				const { data } = response;
 				const startYear = moment(data.start_date).format("YYYY");
 				const endYear = moment(data.end_date).format("YYYY");
@@ -104,7 +98,7 @@ const MeetingConfirm = () => {
 					)
 				);
 
-				console.log(timeRange);
+				// console.log(timeRange);
 				setMeetingDetail(data);
 			});
 	}, []);
@@ -113,7 +107,7 @@ const MeetingConfirm = () => {
 	const handleConfirmBooking = () => {
 		const { dateMeeting, time, name, email, message } = meetingConfirm;
 
-		console.log(meetingConfirm);
+		// console.log(meetingConfirm);
 
 		if (
 			dateMeeting !== "" &&
@@ -134,8 +128,13 @@ const MeetingConfirm = () => {
 			// .post(`http://localhost:3001/bookings`, dataConfirm)
 			axios.post(`${BASE_URL}/bookings`, dataConfirm).then((response) => {
 				if (response.status === 201) {
-					history.push("/");
-					// history.push(`/meeting/${meetingId}/confirmmeeting/success`);
+					// console.log("response data", response.data);
+					const { data } = response;
+
+					// history.push("meeting/:meetingId/confirmmeeting/:bookingId/success");
+					history.push(
+						`/meeting/${meetingId}/confirmmeeting/${data.id}/success`
+					);
 				}
 			});
 		} else {
@@ -195,15 +194,29 @@ const MeetingConfirm = () => {
 									<br />
 
 									<h5 className="lable">Select Time</h5>
-									<TimeConfirm
-										time={time}
-										setTime={setTime}
-										setMeetingConfirm={setMeetingConfirm}
-										meetingConfirm={meetingConfirm}
-										meetingDetail={meetingDetail}
-										setHours={setHours}
-										setMinutes={setMinutes}
-										timeInput
+									<DatePicker
+										className="time-confirm"
+										selected={time}
+										onChange={(time) => {
+											setTime(time);
+											setMeetingConfirm({
+												...meetingConfirm,
+												time: time,
+											});
+										}}
+										showTimeSelect
+										showTimeSelectOnly
+										timeIntervals={meetingDetail.time_meeting}
+										minTime={setHours(
+											setMinutes(new Date(), timeInput.startMinutes),
+											timeInput.startHours
+										)}
+										maxTime={setHours(
+											setMinutes(new Date(), timeInput.endMinutes),
+											timeInput.endHours
+										)}
+										dateFormat="h:mm aa"
+										invalid={timeRequire}
 									/>
 								</FormGroup>
 								<FormGroup>
@@ -250,7 +263,7 @@ const MeetingConfirm = () => {
 										<Input
 											type="textarea"
 											name="message"
-											placeholder="Message"
+											placeholder="Ex: The place will have the meeting."
 											onChange={(event) => {
 												setMeetingConfirm({
 													...meetingConfirm,

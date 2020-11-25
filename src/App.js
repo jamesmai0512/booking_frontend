@@ -15,7 +15,7 @@ const App = () => {
 				<Route path="/login">
 					<Login />
 				</Route>
-				<Route path="/meeting/:meetingId/confirmmeeting/success">
+				<Route path="/meeting/:meetingId/confirmmeeting/:bookingId/success">
 					<AppointmentSuccess />
 				</Route>
 				<Route path="/meeting/:meetingId/confirmmeeting">
