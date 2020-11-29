@@ -1,5 +1,5 @@
 import React from "react";
-import { CardBody, CardTitle, Button, Col } from "reactstrap";
+import { CardBody, CardTitle } from "reactstrap";
 import "../styles/ListMeeting.css";
 
 const ListMeeting = (props) => {
