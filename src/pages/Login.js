@@ -31,7 +31,7 @@ const Login = () => {
 				.post(`${BASE_URL}/sessions`, { username, password })
 				.then((response) => {
 					const { data } = response;
-					if (response.status == 201) {
+					if (response.status === 201) {
 						// axios.post(`${BASE_URL}/meetings`, {headers: {"Authorization" : `Bearer ${response.auth_token}`}})
 
 						localStorage.setItem("account", `${data.auth_token}`);
