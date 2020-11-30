@@ -12,8 +12,8 @@ import {
 } from "reactstrap";
 
 const Login = () => {
-	// const [usernameRequire, setUsernameRequire] = useState(false);
-	// const [passwordRequire, setPasswordRequire] = useState(false);
+	const [usernameRequire, setUsernameRequire] = useState(false);
+	const [passwordRequire, setPasswordRequire] = useState(false);
 	const [login, setLogin] = useState({
 		username: "",
 		password: "",
